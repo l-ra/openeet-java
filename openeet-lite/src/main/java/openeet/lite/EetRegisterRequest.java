@@ -308,6 +308,12 @@ public class EetRegisterRequest {
 			return this;
 		}
 		
+		public Builder dat_odesl_zone(TimeZone val){
+			if (val==null) return this;
+			_dat_odesl_zone=val;
+			return this;
+		}
+		
 		/**
 		 * Set connection timeout to request.
 		 * @param connectionTimeout timeout in ms
@@ -437,6 +443,13 @@ public class EetRegisterRequest {
 			return this;
 		}
 
+		public Builder dat_trzby_zone(TimeZone val){
+			if (val==null) return this;
+			_dat_trzby_zone=val;
+			return this;
+		}
+
+		
 		public Builder celk_trzba(Double val) {
 			if (val==null) return this;
 			_celk_trzba = val;
