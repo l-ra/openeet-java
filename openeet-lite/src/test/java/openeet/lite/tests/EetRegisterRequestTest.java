@@ -6,26 +6,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.Key;
 import java.security.KeyFactory;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Enumeration;
-import java.util.Iterator;
 
-import javax.xml.crypto.dsig.Reference;
 import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.crypto.dsig.XMLSignatureFactory;
 import javax.xml.crypto.dsig.dom.DOMValidateContext;
@@ -43,8 +32,6 @@ import org.w3c.dom.NodeList;
 
 import openeet.lite.EetHeaderDTO;
 import openeet.lite.EetRegisterRequest;
-import openeet.lite.EetRegisterRequest.Overeni;
-import openeet.lite.EetRegisterRequest.PrvniZaslani;
 import openeet.lite.EetSaleDTO;
 
 public class EetRegisterRequestTest {
