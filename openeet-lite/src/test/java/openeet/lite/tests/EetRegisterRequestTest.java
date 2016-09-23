@@ -122,7 +122,7 @@ public class EetRegisterRequestTest {
 		String signed=data.generateSoapRequest();
 		assertNotNull(data.getLastHeader());
 		assertTrue(validateXmlDSig(signed, data.getCertificate()));
-		data.sendRequest(signed, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
+		//data.sendRequest(signed, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
 	}
 	
 	@Test
@@ -157,10 +157,10 @@ public class EetRegisterRequestTest {
 		assertNotNull(request.getLastHeader());
 
 
-		String response=request.sendRequest(requestBody, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
+		//String response=request.sendRequest(requestBody, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
 		//extract FIK
-		assertNotNull(response);
-		assertTrue(response.contains("Potvrzeni fik="));
+		//assertNotNull(response);
+		//assertTrue(response.contains("Potvrzeni fik="));
 		//ready to print online receipt
 	}
 
@@ -204,15 +204,15 @@ public class EetRegisterRequestTest {
         String soapRequest2=request2.generateSoapRequest(null, EetRegisterRequest.PrvniZaslani.PRVNI, null,null);
         EetHeaderDTO header2=request2.getLastHeader();
         
-        String soapResponse2=request.sendRequest(soapRequest2, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
+        //String soapResponse2=request.sendRequest(soapRequest2, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
         
-        if (soapResponse2.contains(FIK_PATTERN)) {
-            int fikIdx=soapResponse2.indexOf(FIK_PATTERN)+FIK_PATTERN.length();
-            String fik=soapResponse2.substring(fikIdx,fikIdx+39);
-        }
-        else {
-        	throw new IllegalStateException();
-        }
+        //if (soapResponse2.contains(FIK_PATTERN)) {
+        //    int fikIdx=soapResponse2.indexOf(FIK_PATTERN)+FIK_PATTERN.length();
+        //    String fik=soapResponse2.substring(fikIdx,fikIdx+39);
+        //}
+        //else {
+        //	throw new IllegalStateException();
+        //}
 	}
 
 	
