@@ -117,10 +117,6 @@ public class EetRegisterRequestTest {
 		String pkp=EetRegisterRequest.formatPkp(data.getPkp());
 		String bkp=EetRegisterRequest.formatBkp(data.getBkp());
 		
-		System.err.println("TBS data:"+data.formatToBeSignedData());
-		System.err.println("PKP:"+pkp);
-		System.err.println("BKP:"+bkp);
-		
 		assertEquals(pkp,"Ddk2WTYu8nzpQscH7t9n8cBsGq4k/ggCwdfkPjM+gHUHPL8P7qmnWofzeW2pAekSSmOClBjF141yN+683g0aXh6VvxY4frBjYhy4XB506LDykIW0oAv086VH7mR0utA8zGd7mCI55p3qv1M/oog/2yG0DefD5mtHIiBG7/n7jgWbROTatJPQYeQWEXEoOJh9/gAq2kuiK3TOYeGeHwOyFjM2Cy3UVal8E3LwafP49kmGOWjHG+cco0CRXxOD3b8y4mgBqTwwC4V8e85917e5sVsaEf3t0hwPkag+WM1LIRzW+QwkkgiMEwoIqCAkhoF1eq/VcsML2ZcrLGejAeAixw==");
 		assertEquals("AC502107-1781EEE4-ECFD152F-2ED08CBA-E6226199",bkp);
 		String signed=data.generateSoapRequest();
