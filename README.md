@@ -1,4 +1,4 @@
-# Work In Progress
+# Work In Progress [![Build Status](https://travis-ci.org/l-ra/openeet-java.svg?branch=master)](https://travis-ci.org/l-ra/openeet-java)
 Even if working well with playground of the EET system, this is still work in progress.
 
 Any contribution is welcomed!
