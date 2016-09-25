@@ -1300,16 +1300,22 @@ private HashMap<String,String> prepareValues(Date dat_odesl_force,PrvniZaslani p
 		HttpURLConnection con=(HttpURLConnection)serviceUrl.openConnection();
 		if (con instanceof HttpsURLConnection){
 			HttpsURLConnection cons=(HttpsURLConnection)con;
-			if (sslContextAlgorithm!=null){
-				SSLContext sslCtx=SSLContext.getInstance(sslContextAlgorithm);
-				if (trustKeyStore!=null) 
-					sslCtx.init(null, new TrustManager[]{new EetTrustManager()}, null);
-				else 
-					sslCtx.init(null, new TrustManager[]{new EetTrustManager(trustKeyStore)}, null);
-				SSLSocketFactory sslSocketFactory=sslCtx.getSocketFactory();
-				if (sslEnabledProtocols!=null) sslSocketFactory=new SSLSocketFactoryTLS11(sslSocketFactory,sslEnabledProtocols);
-				cons.setSSLSocketFactory(sslSocketFactory);
-			}
+			SSLContext sslCtx;
+			
+			if (sslContextAlgorithm==null) throw new IllegalArgumentException("sslContextAlgorithm can't be null");
+			sslCtx=SSLContext.getInstance(sslContextAlgorithm);
+			
+			if (trustKeyStore!=null) 
+				sslCtx.init(null, new TrustManager[]{new EetTrustManager(trustKeyStore)}, null);
+			else 
+				sslCtx.init(null, new TrustManager[]{new EetTrustManager()}, null);
+			
+			SSLSocketFactory sslSocketFactory=sslCtx.getSocketFactory();
+			
+			if (sslEnabledProtocols!=null) 
+				sslSocketFactory=new SSLSocketFactoryTLS11(sslSocketFactory,sslEnabledProtocols);
+			
+			cons.setSSLSocketFactory(sslSocketFactory);	
 		}
 		
 		con.setRequestProperty("Content-Type", "text/xml;charset=UTF-8");
