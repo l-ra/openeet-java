@@ -35,6 +35,7 @@ import java.security.Signature;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPrivateKey;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +43,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -206,6 +208,8 @@ public class EetRegisterRequest {
 		
 		//header
 		protected Date _dat_odesl=new Date();
+		protected TimeZone _dat_odesl_zone=TimeZone.getDefault();
+		
 		protected PrvniZaslani _prvni_zaslani;
 		protected UUID _uuid_zpravy;
 		protected Overeni _overeni;		
@@ -217,6 +221,7 @@ public class EetRegisterRequest {
 		protected String _id_pokl;
 		protected String _porad_cis;
 		protected Date _dat_trzby=new Date();
+		protected TimeZone _dat_trzby_zone=TimeZone.getDefault();
 		protected Double _celk_trzba;
 		protected Double _zakl_nepodl_dph;
 		protected Double _zakl_dan1;
@@ -299,6 +304,13 @@ public class EetRegisterRequest {
 		public Builder dat_odesl(String val) {
 			if (val==null) return this;
 			_dat_odesl = parseDate(val);
+			_dat_odesl_zone = parseTimeZone(val);
+			return this;
+		}
+		
+		public Builder dat_odesl_zone(TimeZone val){
+			if (val==null) return this;
+			_dat_odesl_zone=val;
 			return this;
 		}
 		
@@ -427,9 +439,17 @@ public class EetRegisterRequest {
 		public Builder dat_trzby(String val) {
 			if (val==null) return this;
 			_dat_trzby = EetRegisterRequest.parseDate(val);
+			_dat_trzby_zone = EetRegisterRequest.parseTimeZone(val);
 			return this;
 		}
 
+		public Builder dat_trzby_zone(TimeZone val){
+			if (val==null) return this;
+			_dat_trzby_zone=val;
+			return this;
+		}
+
+		
 		public Builder celk_trzba(Double val) {
 			if (val==null) return this;
 			_celk_trzba = val;
@@ -738,6 +758,7 @@ public class EetRegisterRequest {
 
 	protected X509Certificate certificate;
 	protected Date dat_odesl;
+	protected TimeZone dat_odesl_zone;
 	protected PrvniZaslani prvni_zaslani;
 	protected UUID uuid_zpravy;
 	protected Overeni overeni;
@@ -747,6 +768,7 @@ public class EetRegisterRequest {
 	protected String id_pokl;
 	protected String porad_cis;
 	protected Date dat_trzby;
+	protected TimeZone dat_trzby_zone;	
 	protected Double celk_trzba;
 	protected Double zakl_nepodl_dph;
 	protected Double zakl_dan1;
@@ -778,6 +800,7 @@ public class EetRegisterRequest {
 
 		//header
 		dat_odesl = builder._dat_odesl;
+		dat_odesl_zone=builder._dat_odesl_zone;
 		prvni_zaslani = builder._prvni_zaslani;
 		uuid_zpravy = builder._uuid_zpravy;
 		overeni=builder._overeni;
@@ -790,6 +813,7 @@ public class EetRegisterRequest {
 		id_pokl = builder._id_pokl;
 		porad_cis = builder._porad_cis;
 		dat_trzby = builder._dat_trzby;
+		dat_trzby_zone=builder._dat_trzby_zone;
 		celk_trzba = builder._celk_trzba;
 		zakl_nepodl_dph = builder._zakl_nepodl_dph;
 		zakl_dan1 = builder._zakl_dan1;
@@ -974,8 +998,19 @@ public class EetRegisterRequest {
 			throw new NullPointerException(
 					String.format("missing some of _dic_popl(%s), _id_provoz(%s), _id_pokl(%s), _porad_cis(%s), _dat_trzby(%s), _celk_trzba(%s)",
 							dic_popl, id_provoz, id_pokl, porad_cis, dat_trzby,celk_trzba));
-		return String.format("%s|%s|%s|%s|%s|%s",dic_popl, id_provoz, id_pokl, porad_cis, formatDate(dat_trzby),formatAmount(celk_trzba));
+		return String.format("%s|%s|%s|%s|%s|%s",dic_popl, id_provoz, id_pokl, porad_cis, formatDate(dat_trzby, dat_trzby_zone),formatAmount(celk_trzba));
 	}
+	
+	public static String formatDate(Date date, TimeZone zone){		
+		if(date==null || zone==null)
+			return null;
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		df.setTimeZone(zone);
+		String ret= df.format(date);
+		ret=ret.replaceFirst("\\+([0-9][0-9])([0-9][0-9])$","+$1:$2");
+		return ret;
+	}
+
 	
 	public static String formatDate(Date date){
 		if(date==null)
@@ -993,6 +1028,12 @@ public class EetRegisterRequest {
 		} catch (ParseException e) {
 			throw new IllegalArgumentException("bad date",e);
 		}
+	}
+	
+	public static TimeZone parseTimeZone(String date){
+		if (date == null ) return null;
+		String zoneStr=date.substring(date.lastIndexOf("+"));
+		return TimeZone.getTimeZone("GMT"+zoneStr);
 	}
 
 	public String formatBkp(){
@@ -1153,7 +1194,7 @@ private HashMap<String,String> prepareValues(Date dat_odesl_force,PrvniZaslani p
   {
     HashMap<String,String> values=new HashMap<String,String>();
     values.put("prvni_zaslani",(prvni_zaslani_force!=null?prvni_zaslani_force:prvni_zaslani).toString());
-    values.put("dat_odesl",formatDate(dat_odesl_force!=null?dat_odesl_force:dat_odesl));
+    values.put("dat_odesl",formatDate(dat_odesl_force!=null?dat_odesl_force:dat_odesl,dat_odesl_zone));
     values.put("uuid_zpravy",(uuid_zpravy_force!=null?uuid_zpravy_force:uuid_zpravy).toString());
     values.put("overeni",(overeni_force!=null?overeni_force:overeni).toString());
     values.put("certb64",certificate!=null?Base64.encodeToString(certificate.getEncoded(),Base64.NO_WRAP):null);
@@ -1162,7 +1203,7 @@ private HashMap<String,String> prepareValues(Date dat_odesl_force,PrvniZaslani p
     values.put("id_provoz",id_provoz);
     values.put("id_pokl",id_pokl);
     values.put("porad_cis",porad_cis);
-    values.put("dat_trzby",formatDate(dat_trzby));
+    values.put("dat_trzby",formatDate(dat_trzby,dat_trzby_zone));
     values.put("celk_trzba",formatAmount(celk_trzba));
     values.put("zakl_nepodl_dph",formatAmount(zakl_nepodl_dph));
     values.put("zakl_dan1",formatAmount(zakl_dan1));
@@ -1259,16 +1300,22 @@ private HashMap<String,String> prepareValues(Date dat_odesl_force,PrvniZaslani p
 		HttpURLConnection con=(HttpURLConnection)serviceUrl.openConnection();
 		if (con instanceof HttpsURLConnection){
 			HttpsURLConnection cons=(HttpsURLConnection)con;
-			if (sslContextAlgorithm!=null){
-				SSLContext sslCtx=SSLContext.getInstance(sslContextAlgorithm);
-				if (trustKeyStore!=null) 
-					sslCtx.init(null, new TrustManager[]{new EetTrustManager()}, null);
-				else 
-					sslCtx.init(null, new TrustManager[]{new EetTrustManager(trustKeyStore)}, null);
-				SSLSocketFactory sslSocketFactory=sslCtx.getSocketFactory();
-				if (sslEnabledProtocols!=null) sslSocketFactory=new SSLSocketFactoryTLS11(sslSocketFactory,sslEnabledProtocols);
-				cons.setSSLSocketFactory(sslSocketFactory);
-			}
+			SSLContext sslCtx;
+			
+			if (sslContextAlgorithm==null) throw new IllegalArgumentException("sslContextAlgorithm can't be null");
+			sslCtx=SSLContext.getInstance(sslContextAlgorithm);
+			
+			if (trustKeyStore!=null) 
+				sslCtx.init(null, new TrustManager[]{new EetTrustManager(trustKeyStore)}, null);
+			else 
+				sslCtx.init(null, new TrustManager[]{new EetTrustManager()}, null);
+			
+			SSLSocketFactory sslSocketFactory=sslCtx.getSocketFactory();
+			
+			if (sslEnabledProtocols!=null) 
+				sslSocketFactory=new SSLSocketFactoryTLS11(sslSocketFactory,sslEnabledProtocols);
+			
+			cons.setSSLSocketFactory(sslSocketFactory);	
 		}
 		
 		con.setRequestProperty("Content-Type", "text/xml;charset=UTF-8");
@@ -1326,7 +1373,7 @@ private HashMap<String,String> prepareValues(Date dat_odesl_force,PrvniZaslani p
 		dto.id_provoz=id_provoz;
 		dto.id_pokl=id_pokl;
 		dto.porad_cis=porad_cis;
-		dto.dat_trzby=dat_trzby!=null?formatDate(dat_trzby):null;
+		dto.dat_trzby=dat_trzby!=null?formatDate(dat_trzby,dat_trzby_zone):null;
 		dto.celk_trzba=celk_trzba!=null?formatAmount(celk_trzba):null;
 		dto.zakl_nepodl_dph=zakl_nepodl_dph!=null?formatAmount(zakl_nepodl_dph):null;
 		dto.zakl_dan1=zakl_dan1!=null?formatAmount(zakl_dan1):null;
@@ -1350,7 +1397,7 @@ private HashMap<String,String> prepareValues(Date dat_odesl_force,PrvniZaslani p
 	
 	public EetHeaderDTO getEetHeaderDTO(){
 		EetHeaderDTO dto=new EetHeaderDTO();
-	    dto.dat_odesl=formatDate(dat_odesl);
+	    dto.dat_odesl=formatDate(dat_odesl,dat_odesl_zone);
 		dto.prvni_zaslani=prvni_zaslani.toString();
 		dto.uuid_zpravy=uuid_zpravy.toString();
 		dto.overeni=overeni.toString();
