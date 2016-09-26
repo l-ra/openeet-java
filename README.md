@@ -76,4 +76,6 @@ public void simpleRegistrationProcessTest()
 
 * releas & publish maven artefact
 * certificate management utilities - create cert request, get certificate and key ready to use (depends on including CA services in the playground)
+
+# Plans done
 * basic offline processing - mainly in the point of view of request structure manipulation (what remains unchanged when resending)
