@@ -323,6 +323,11 @@ public class EetRegisterRequest {
 			return this;
 		}
 		
+		public Builder connectionTimeout(String connectionTimeout){
+			_connectionTimeout = Integer.parseInt(connectionTimeout);
+			return this;
+		}
+		
 		/**
 		 * Set reat timeout to request.
 		 * @param readTimeout timeout in ms 
@@ -332,6 +337,10 @@ public class EetRegisterRequest {
 			return this;
 		}
 		
+		public Builder readTimeout(String readTimeout){
+			_readTimeout = Integer.parseInt(readTimeout);
+			return this;
+		}
 
 		/** 
 		 * 
