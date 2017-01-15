@@ -17,7 +17,7 @@ public class Main {
 			   .dat_trzby(EetRegisterRequest.formatDate(new Date()))
 			   .celk_trzba(100.0)
 			   .rezim(0)
-			   .pkcs12(EetRegisterRequest.loadStream(Main.class.getResourceAsStream("/openeet/lite/01000003.p12")))
+			   .pkcs12(EetRegisterRequest.loadStream(Main.class.getResourceAsStream("/openeet/lite/EET_CA1_Playground-CZ1212121218.p12")))
 			   .pkcs12password("eet")
 			   .build();
 

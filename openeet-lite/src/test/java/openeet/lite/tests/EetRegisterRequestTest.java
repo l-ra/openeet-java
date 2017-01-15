@@ -51,13 +51,13 @@ public class EetRegisterRequestTest {
 	
 	private static void loadCert() throws IOException, CertificateException{
 		CertificateFactory cf=CertificateFactory.getInstance("X509");
-		cert=(X509Certificate)cf.generateCertificate(EetRegisterRequestTest.class.getResourceAsStream("/01000003.pem"));
+		cert=(X509Certificate)cf.generateCertificate(EetRegisterRequestTest.class.getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12.pem"));
 	}
 	
 	//pkcs1->pkcs8 openssl pkcs8 -topk8 -inform PEM -outform DER -in mykey.pem -out mykey.der -nocrypt
 	private static void loadKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException{
 		KeyFactory kf=KeyFactory.getInstance("RSA");
-		PKCS8EncodedKeySpec ks=new PKCS8EncodedKeySpec(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/01000003.der")));
+		PKCS8EncodedKeySpec ks=new PKCS8EncodedKeySpec(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12.pk8")));
 		key=kf.generatePrivate(ks);
 	}
 	
@@ -94,7 +94,7 @@ public class EetRegisterRequestTest {
 		   .dat_trzby("2016-06-30T08:43:28+02:00")
 		   .celk_trzba(100.0)
 		   .rezim(0)
-		   .pkcs12(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/01000003.p12")))
+		   .pkcs12(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12")))
 		   .pkcs12password("eet")
 		   .build();
 	
@@ -104,8 +104,8 @@ public class EetRegisterRequestTest {
 		String pkp=EetRegisterRequest.formatPkp(data.getPkp());
 		String bkp=EetRegisterRequest.formatBkp(data.getBkp());
 		
-		assertEquals(pkp,"Ddk2WTYu8nzpQscH7t9n8cBsGq4k/ggCwdfkPjM+gHUHPL8P7qmnWofzeW2pAekSSmOClBjF141yN+683g0aXh6VvxY4frBjYhy4XB506LDykIW0oAv086VH7mR0utA8zGd7mCI55p3qv1M/oog/2yG0DefD5mtHIiBG7/n7jgWbROTatJPQYeQWEXEoOJh9/gAq2kuiK3TOYeGeHwOyFjM2Cy3UVal8E3LwafP49kmGOWjHG+cco0CRXxOD3b8y4mgBqTwwC4V8e85917e5sVsaEf3t0hwPkag+WM1LIRzW+QwkkgiMEwoIqCAkhoF1eq/VcsML2ZcrLGejAeAixw==");
-		assertEquals("AC502107-1781EEE4-ECFD152F-2ED08CBA-E6226199",bkp);
+		assertEquals(pkp,"XviohSP9MAv6+BFO79pBk9QP16j2pj1gv65rufbC+meewgKTkDF0pUyFDqWjLdJ5FF6zyZe4ehCHCt7vQFga6y6wZ/xkgk0vxyEYNfsvD30gNHyEirNXDppJNfktgEiaSi3P8oejUQgOZKr44REoxPgHUyM/LC9y7a5I5cDsCPBsrCXij9TPsGQqRxZQcZCPvPVyfimRPn3Ut+qwZfHvGKvNAwxHHNS5T4QNRAsSIDnVYJPhHDOHyYHZ0fhpFiITaepxNYh863HGSZpG2gWkTegl/rVSpqox3PzyMUbYZudBeEW6rDGmB6xzHDhB3tyKCKybqCG8nRvH61ktBXFsBA==");
+		assertEquals("20B67F6D-2F984F1B-97008130-5DCA89EB-56DB71D8",bkp);
 		String signed=data.generateSoapRequest();
 		assertNotNull(data.getLastHeader());
 		assertTrue(validateXmlDSig(signed, data.getCertificate()));
@@ -123,7 +123,7 @@ public class EetRegisterRequestTest {
 		   .dat_trzby("2016-06-30T08:43:28+02:00")
 		   .celk_trzba(100.0)
 		   .rezim(0)
-		   .pkcs12(loadStream(getClass().getResourceAsStream("/01000003.p12")))
+		   .pkcs12(loadStream(getClass().getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12")))
 		   .pkcs12password("eet")
 		   .build();
 
@@ -163,7 +163,7 @@ public class EetRegisterRequestTest {
 		
 		EetRegisterRequest.Builder builder=EetRegisterRequest.builder()
 			.fromDTO(dto)
-		    .pkcs12(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/01000003.p12")))
+		    .pkcs12(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12")))
 		    .pkcs12password("eet");
 		
         EetRegisterRequest request=builder.build();
@@ -182,7 +182,7 @@ public class EetRegisterRequestTest {
         
 		EetRegisterRequest.Builder builder2=EetRegisterRequest.builder()
 				.fromDTO(dto1)
-			    .pkcs12(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/01000003.p12")))
+			    .pkcs12(loadStream(EetRegisterRequestTest.class.getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12")))
 			    .pkcs12password("eet");
 		
         EetRegisterRequest request2=builder2.build();

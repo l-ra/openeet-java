@@ -46,7 +46,7 @@ public void simpleRegistrationProcessTest()
 	   .dat_trzby("2016-06-30T08:43:28+02:00")
 	   .celk_trzba(100.0)
 	   .rezim(0)
-	   .pkcs12(loadStream(getClass().getResourceAsStream("/01000003.p12")))
+	   .pkcs12(loadStream(getClass().getResourceAsStream("/EET_CA1_Playground-CZ1212121218.p12")))
 	   .pkcs12password("eet")
 	   .build();
 
