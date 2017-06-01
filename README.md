@@ -7,7 +7,7 @@ Any contribution is welcomed!
 # Java implementation of core EET functionalities
 Based on proof of concept implemented in the shell folder, Java implementation now works for generating valid signed SOAP request.
 
-Look at tests for example ho to use the class.
+Look at tests for example how to use the class.
 
 There are no other dependences but java runtime (at least 1.4.2.)
 
