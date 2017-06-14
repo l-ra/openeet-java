@@ -360,7 +360,7 @@ public class EetRegisterRequest {
 
 		public Builder prvni_zaslani(String val) {
 			if (val==null) return this;
-			_prvni_zaslani = PrvniZaslani.valueOf(val);
+			_prvni_zaslani = PrvniZaslani.valueOf(Boolean.valueOf(val));
 			return this;
 		}
 
@@ -399,7 +399,7 @@ public class EetRegisterRequest {
 
 		public Builder overeni(String val) {
 			if (val==null) return this;
-			_overeni = Overeni.valueOf(val);
+			_overeni = Overeni.valueOf(Boolean.valueOf(val));
 			return this;
 		}
 		
