@@ -712,7 +712,7 @@ public class EetRegisterRequest {
 
 
 		/**
-		 * Computed when private key available during nuild() call
+		 * Computed when private key available during build() call
 		 * @param val
 		 * @return
 		 */
