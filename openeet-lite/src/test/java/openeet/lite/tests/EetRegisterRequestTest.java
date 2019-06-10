@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -109,7 +110,7 @@ public class EetRegisterRequestTest {
 		String signed=data.generateSoapRequest();
 		assertNotNull(data.getLastHeader());
 		assertTrue(validateXmlDSig(signed, data.getCertificate()));
-		//data.sendRequest(signed, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
+		data.sendRequest(signed, new URL("https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"));
 	}
 	
 	@Test
