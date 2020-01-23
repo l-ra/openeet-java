@@ -201,7 +201,7 @@ public class EetRegisterRequest {
 		protected char[] _pkcs12password;
 		protected PrivateKey _key;
 		protected X509Certificate _certificate;
-		protected String _sslContextAlgorithm="TLSv1.1";
+		protected String _sslContextAlgorithm="TLSv1.2";
 		protected String[] _sslEnabledProtocols=new String[] {"TLSv1.1", "TLSv1.2"};
 		protected KeyStore _trustKeyStore;
 		protected int _connectionTimeout, _readTimeout; 
