@@ -6,3 +6,5 @@ openeet-lite/.classpath
 openeet-lite/.project
 openeet-lite/.settings/
 openeet-lite/bin/
+*.iml
+
